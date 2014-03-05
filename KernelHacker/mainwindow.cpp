@@ -14,9 +14,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->ui->tableWidget->setColumnCount(4);
+    this->ui->tableWidget->setColumnCount(3);
     QStringList header;
-    header << "Parameter" << "Value" << "Modifiable online" << "Modifiable offline";
+    header << "Parameter" << "Value" << "Modifiable";
     this->ui->tableWidget->setHorizontalHeaderLabels(header);
     this->ui->tableWidget->verticalHeader()->setVisible(false);
     this->ui->tableWidget->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     header.clear();
     header << "PID" << "Name" << "VM (kb)" << "RSS (kb)";
     this->ui->tableWidget_2->setHorizontalHeaderLabels(header);
+    this->stat = new QLabel(this);
     this->ui->tableWidget_2->verticalHeader()->setVisible(false);
     this->ui->tableWidget_2->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->tableWidget_2->setShowGrid(false);
@@ -34,9 +35,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->RefreshStatic();
     Loaded = true;
     proc = new QTimer(this);
+    this->ui->statusBar->addWidget(this->stat);
     connect(proc, SIGNAL(timeout()), this, SLOT(ProcessReload()));
     proc->start(2000);
     this->ProcessReload();
+    this->RenderStatus();
 }
 
 QString MainWindow::String2Bool(bool b)
@@ -51,6 +54,7 @@ QString MainWindow::String2Bool(bool b)
 MainWindow::~MainWindow()
 {
     delete proc;
+    delete stat;
     delete ui;
 }
 
@@ -65,6 +69,11 @@ void MainWindow::Resize()
     {
         this->ui->tableWidget->resizeRowsToContents();
     }
+}
+
+void MainWindow::RenderStatus()
+{
+    this->stat->setText("Processes: " + QString::number(this->ui->tableWidget_2->rowCount()));
 }
 
 void MainWindow::ProcessReload()
@@ -90,6 +99,7 @@ void MainWindow::ProcessReload()
     {
         this->ui->tableWidget_2->removeRow(x);
     }
+    this->RenderStatus();
 }
 
 void MainWindow::RefreshStatic()
@@ -127,7 +137,6 @@ void MainWindow::RefreshStatic()
         this->ui->tableWidget->setItem(size, 0, new QTableWidgetItem(kp->Name));
         this->ui->tableWidget->setItem(size, 1, new QTableWidgetItem(kp->Value));
         this->ui->tableWidget->setItem(size, 2, new QTableWidgetItem(String2Bool(kp->IsModifiable_Online)));
-        this->ui->tableWidget->setItem(size, 3, new QTableWidgetItem(String2Bool(kp->IsModifiable_Offline)));
         this->ui->tableWidget->resizeRowToContents(size);
         id++;
     }

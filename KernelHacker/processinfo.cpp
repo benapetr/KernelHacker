@@ -32,11 +32,14 @@ void ProcessInfo::Reload()
             process.PID = i.fileName().toInt();
             process.Name = ReadAttr(i.fileName(), "comm");
             QStringList prop(ReadAttr(i.fileName(), "stat").split(' '));
-            QStringList m(ReadAttr(i.fileName(), "stat").split(' '));
+            QStringList m(ReadAttr(i.fileName(), "statm").split(' '));
             process.VmSize = (unsigned long)SystemInfo::Pagesize * (unsigned long)m.at(0).toLong();
             if (m.count() > 1)
             {
                 process.VmRss = (unsigned long)SystemInfo::Pagesize * (unsigned long)m.at(1).toLong();
+            } else
+            {
+                process.nice = 0;
             }
             process.nice = prop.at(18).toInt();
             process.StartTime = prop.at(21).toLong();

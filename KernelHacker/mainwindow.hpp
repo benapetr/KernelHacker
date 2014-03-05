@@ -39,10 +39,12 @@ class MainWindow : public QMainWindow
     private slots:
         void on_actionExit_triggered();
         void Resize();
+        void RenderStatus();
         void ProcessReload();
 
     private:
         void RefreshStatic();
+        QLabel *stat;
         QTimer *proc;
         Ui::MainWindow *ui;
 };
