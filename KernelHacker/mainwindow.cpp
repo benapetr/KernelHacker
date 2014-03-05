@@ -21,18 +21,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->ui->tableWidget->verticalHeader()->setVisible(false);
     this->ui->tableWidget->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-#if QT_VERSION >= 0x050000
-// Qt5 code
-    //this->ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-// Qt4 code
-    //this->ui->tableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
     this->ui->tableWidget->setShowGrid(false);
+    this->ui->tableWidget_2->setColumnCount(4);
+    header.clear();
+    header << "PID" << "Name" << "VM (kb)" << "RSS (kb)";
+    this->ui->tableWidget_2->setHorizontalHeaderLabels(header);
+    this->ui->tableWidget_2->verticalHeader()->setVisible(false);
+    this->ui->tableWidget_2->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->ui->tableWidget_2->setShowGrid(false);
     Loaded = false;
     connect(this->ui->tableWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(Resize()));
     this->RefreshStatic();
     Loaded = true;
+    proc = new QTimer(this);
+    connect(proc, SIGNAL(timeout()), this, SLOT(ProcessReload()));
+    proc->start(2000);
+    this->ProcessReload();
 }
 
 QString MainWindow::String2Bool(bool b)
@@ -46,6 +50,7 @@ QString MainWindow::String2Bool(bool b)
 
 MainWindow::~MainWindow()
 {
+    delete proc;
     delete ui;
 }
 
@@ -59,6 +64,31 @@ void MainWindow::Resize()
     if (Loaded)
     {
         this->ui->tableWidget->resizeRowsToContents();
+    }
+}
+
+void MainWindow::ProcessReload()
+{
+    ProcessInfo::Reload();
+    this->ui->tableWidget_2->clearContents();
+    int x = 0;
+    while (x < ProcessInfo::ProcessList.count())
+    {
+        ProcessInfo info = ProcessInfo::ProcessList.at(x);
+        if (x + 1 > this->ui->tableWidget_2->rowCount())
+        {
+            this->ui->tableWidget_2->insertRow(x);
+        }
+        this->ui->tableWidget_2->setItem(x, 0, new QTableWidgetItem(QString::number(info.PID)));
+        this->ui->tableWidget_2->setItem(x, 1, new QTableWidgetItem(info.Name));
+        this->ui->tableWidget_2->setItem(x, 2, new QTableWidgetItem(QString::number(info.VmSize / 1024)));
+        this->ui->tableWidget_2->setItem(x, 3, new QTableWidgetItem(QString::number(info.VmRss / 1024)));
+        this->ui->tableWidget_2->resizeRowToContents(x);
+        x++;
+    }
+    while (x < this->ui->tableWidget_2->rowCount())
+    {
+        this->ui->tableWidget_2->removeRow(x);
     }
 }
 

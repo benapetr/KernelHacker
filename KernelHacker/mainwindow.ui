@@ -149,6 +149,11 @@
        <attribute name="title">
         <string>Processes</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QTableWidget" name="tableWidget_2"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -188,7 +193,32 @@
     </property>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuDisplay_columns">
+    <property name="title">
+     <string>Display columns</string>
+    </property>
+    <addaction name="actionProcess_priority"/>
+    <addaction name="actionOOM_Score"/>
+    <addaction name="actionSwappiness"/>
+   </widget>
+   <widget class="QMenu" name="menuRefresh">
+    <property name="title">
+     <string>Refresh</string>
+    </property>
+    <widget class="QMenu" name="menuProcess_list">
+     <property name="title">
+      <string>Process list</string>
+     </property>
+     <addaction name="actionDisabled"/>
+     <addaction name="action2_seconds"/>
+     <addaction name="action10_seconds"/>
+     <addaction name="action20_seconds"/>
+    </widget>
+    <addaction name="menuProcess_list"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuDisplay_columns"/>
+   <addaction name="menuRefresh"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -202,6 +232,59 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionProcess_priority">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Process priority</string>
+   </property>
+  </action>
+  <action name="actionOOM_Score">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>OOM Score</string>
+   </property>
+  </action>
+  <action name="actionSwappiness">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Swappiness</string>
+   </property>
+  </action>
+  <action name="actionDisabled">
+   <property name="text">
+    <string>Disabled</string>
+   </property>
+  </action>
+  <action name="action2_seconds">
+   <property name="text">
+    <string>2 seconds</string>
+   </property>
+  </action>
+  <action name="action10_seconds">
+   <property name="text">
+    <string>10 seconds</string>
+   </property>
+  </action>
+  <action name="action20_seconds">
+   <property name="text">
+    <string>20 seconds</string>
    </property>
   </action>
  </widget>

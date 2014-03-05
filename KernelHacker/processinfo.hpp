@@ -8,16 +8,30 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
-#include "systeminfo.hpp"
-#include "mainwindow.hpp"
+#ifndef PROCESSINFO_HPP
+#define PROCESSINFO_HPP
 
-int main(int argc, char *argv[])
+#include <QList>
+#include <QDir>
+#include <QFile>
+#include <QString>
+#include "systeminfo.hpp"
+
+class ProcessInfo
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
-}
+    public:
+        static void Reload();
+        static QString ReadAttr(QString pid, QString what);
+        static QList<ProcessInfo> ProcessList;
+        static bool IsPID(QString name);
+        ProcessInfo();
+        int PID;
+        QString Name;
+        unsigned long VmSize;
+        unsigned long VmRss;
+        int nice;
+        long StartTime;
+
+};
+
+#endif // PROCESSINFO_HPP

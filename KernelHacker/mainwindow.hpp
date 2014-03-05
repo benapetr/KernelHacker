@@ -12,6 +12,7 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QTimer>
 #include <QMessageBox>
 #include <errno.h>
 #include <string.h>
@@ -19,6 +20,7 @@
 #include "about.hpp"
 #include "kernelparameter.hpp"
 #include "terminal.hpp"
+#include "processinfo.hpp"
 
 namespace Ui {
     class MainWindow;
@@ -37,9 +39,11 @@ class MainWindow : public QMainWindow
     private slots:
         void on_actionExit_triggered();
         void Resize();
+        void ProcessReload();
 
     private:
         void RefreshStatic();
+        QTimer *proc;
         Ui::MainWindow *ui;
 };
 
