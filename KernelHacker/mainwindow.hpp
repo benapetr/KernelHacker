@@ -16,7 +16,9 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/utsname.h>
+#include "about.hpp"
 #include "kernelparameter.hpp"
+#include "terminal.hpp"
 
 namespace Ui {
     class MainWindow;

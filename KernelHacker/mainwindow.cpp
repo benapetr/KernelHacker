@@ -64,6 +64,13 @@ void MainWindow::Resize()
 
 void MainWindow::RefreshStatic()
 {
+    Terminal::Write("Fetching kernel info");
+    QFile c("/proc/cpuinfo");
+    if (c.open(QIODevice::ReadOnly))
+    {
+        this->ui->label_13->setText(QString(c.readAll()));
+        c.close();
+    }
     utsname b;
     KernelParameter::Init();
     int rs = uname(&b);
