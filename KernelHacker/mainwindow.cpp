@@ -68,7 +68,7 @@ void MainWindow::RefreshStatic()
     QFile c("/proc/cpuinfo");
     if (c.open(QIODevice::ReadOnly))
     {
-        this->ui->label_13->setText(QString(c.readAll()));
+        this->ui->textEdit->setText(QString(c.readAll()));
         c.close();
     }
     utsname b;
