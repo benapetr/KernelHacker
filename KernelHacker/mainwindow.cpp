@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     this->ui->tableWidget->setColumnCount(3);
     QStringList header;
-    header << "Parameter" << "Value" << "Modifiable";
+    header << tr("Parameter") << tr("Value") << tr("Modifiable");
     this->ui->tableWidget->setHorizontalHeaderLabels(header);
     this->ui->tableWidget->verticalHeader()->setVisible(false);
     this->ui->tableWidget->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->ui->tableWidget->setShowGrid(false);
     this->ui->tableWidget_2->setColumnCount(4);
     header.clear();
-    header << "PID" << "Name" << "VM (kb)" << "RSS (kb)";
+    header << "PID" << tr("Name") << "VM (kb)" << "RSS (kb)";
     this->ui->tableWidget_2->setHorizontalHeaderLabels(header);
     this->stat = new QLabel(this);
     this->ui->tableWidget_2->verticalHeader()->setVisible(false);
@@ -73,7 +73,7 @@ void MainWindow::Resize()
 
 void MainWindow::RenderStatus()
 {
-    this->stat->setText("Processes: " + QString::number(this->ui->tableWidget_2->rowCount()));
+    this->stat->setText(tr("Processes: ") + QString::number(this->ui->tableWidget_2->rowCount()));
 }
 
 void MainWindow::ProcessReload()
@@ -140,4 +140,48 @@ void MainWindow::RefreshStatic()
         this->ui->tableWidget->resizeRowToContents(size);
         id++;
     }
+}
+
+void MainWindow::on_actionDisabled_triggered()
+{
+    this->ui->actionDisabled->setChecked(true);
+    this->ui->action10_seconds->setChecked(false);
+    this->ui->action20_seconds->setChecked(false);
+    this->ui->action2_seconds->setChecked(false);
+    this->proc->stop();
+}
+
+void MainWindow::on_action10_seconds_triggered()
+{
+    this->ui->actionDisabled->setChecked(false);
+    this->ui->action10_seconds->setChecked(true);
+    this->ui->action20_seconds->setChecked(false);
+    this->ui->action2_seconds->setChecked(false);
+    this->proc->stop();
+    this->proc->start(10000);
+}
+
+void MainWindow::on_action2_seconds_triggered()
+{
+    this->ui->actionDisabled->setChecked(false);
+    this->ui->action10_seconds->setChecked(false);
+    this->ui->action20_seconds->setChecked(false);
+    this->ui->action2_seconds->setChecked(true);
+    this->proc->stop();
+    this->proc->start(2000);
+}
+
+void MainWindow::on_action20_seconds_triggered()
+{
+    this->ui->actionDisabled->setChecked(false);
+    this->ui->action10_seconds->setChecked(false);
+    this->ui->action20_seconds->setChecked(true);
+    this->ui->action2_seconds->setChecked(false);
+    this->proc->stop();
+    this->proc->start(20000);
+}
+
+void MainWindow::on_actionDisplay_about_triggered()
+{
+
 }

@@ -15,6 +15,21 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -270,15 +285,23 @@
       <string>Process list</string>
      </property>
      <addaction name="actionDisabled"/>
+     <addaction name="separator"/>
      <addaction name="action2_seconds"/>
      <addaction name="action10_seconds"/>
      <addaction name="action20_seconds"/>
     </widget>
     <addaction name="menuProcess_list"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionDisplay_about"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDisplay_columns"/>
    <addaction name="menuRefresh"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -328,23 +351,43 @@
    </property>
   </action>
   <action name="actionDisabled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Disabled</string>
    </property>
   </action>
   <action name="action2_seconds">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>2 seconds</string>
    </property>
   </action>
   <action name="action10_seconds">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>10 seconds</string>
    </property>
   </action>
   <action name="action20_seconds">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>20 seconds</string>
+   </property>
+  </action>
+  <action name="actionDisplay_about">
+   <property name="text">
+    <string>Display about</string>
    </property>
   </action>
  </widget>

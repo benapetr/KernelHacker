@@ -41,6 +41,11 @@ class MainWindow : public QMainWindow
         void Resize();
         void RenderStatus();
         void ProcessReload();
+        void on_actionDisabled_triggered();
+        void on_action10_seconds_triggered();
+        void on_action2_seconds_triggered();
+        void on_action20_seconds_triggered();
+        void on_actionDisplay_about_triggered();
 
     private:
         void RefreshStatic();
