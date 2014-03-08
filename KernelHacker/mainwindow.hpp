@@ -13,6 +13,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QTableWidgetItem>
 #include <QMessageBox>
 #include <errno.h>
 #include <string.h>
@@ -26,6 +27,16 @@ namespace Ui {
     class MainWindow;
 }
 
+class SortTableWidgetItem : public QTableWidgetItem
+{
+    public:
+        SortTableWidgetItem(const QString &text, int type = Type) : QTableWidgetItem(text, type) {}
+        bool operator <(QTableWidgetItem *other)
+        {
+            return text().toInt() < other->text().toInt();
+        }
+};
+
 class MainWindow : public QMainWindow
 {
         Q_OBJECT
@@ -34,6 +45,8 @@ class MainWindow : public QMainWindow
         explicit MainWindow(QWidget *parent = 0);
         static QString String2Bool(bool b);
         ~MainWindow();
+        void RegenerateHeader();
+        About *fAbout;
         bool Loaded;
         
     private slots:
@@ -46,6 +59,8 @@ class MainWindow : public QMainWindow
         void on_action2_seconds_triggered();
         void on_action20_seconds_triggered();
         void on_actionDisplay_about_triggered();
+        void on_actionProcess_priority_triggered();
+        void on_actionOOM_Score_triggered();
 
     private:
         void RefreshStatic();

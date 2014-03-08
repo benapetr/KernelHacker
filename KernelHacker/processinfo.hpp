@@ -30,6 +30,8 @@ class ProcessInfo
         unsigned long VmSize;
         unsigned long VmRss;
         int nice;
+        int Oom;
+        int Swappiness;
         long StartTime;
 
 };
