@@ -13,8 +13,9 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    this->ui->setupUi(this);
     this->fAbout = NULL;
+    this->Units = UnitType_Dynamic;
     this->ui->tableWidget->setColumnCount(3);
     QStringList header;
     header << tr("Parameter") << tr("Value") << tr("Modifiable");
@@ -28,15 +29,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->ui->tableWidget_2->verticalHeader()->setVisible(false);
     this->ui->tableWidget_2->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->tableWidget_2->setShowGrid(false);
-    Loaded = false;
+    this->Loaded = false;
     connect(this->ui->tableWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(Resize()));
     this->RefreshStatic();
-    Loaded = true;
-    proc = new QTimer(this);
+    this->Loaded = true;
+    this->proc = new QTimer(this);
     this->ui->statusBar->addWidget(this->stat);
-    connect(proc, SIGNAL(timeout()), this, SLOT(ProcessReload()));
+    connect(this->proc, SIGNAL(timeout()), this, SLOT(ProcessReload()));
     this->ui->tableWidget_2->horizontalHeader()->resizeSection(1, 200);
-    proc->start(2000);
+    this->proc->start(2000);
     this->ProcessReload();
     this->RenderStatus();
 }
@@ -108,8 +109,8 @@ void MainWindow::ProcessReload()
         }
         this->ui->tableWidget_2->setItem(x, 0, new SortTableWidgetItem(QString::number(info.PID)));
         this->ui->tableWidget_2->setItem(x, 1, new QTableWidgetItem(info.Name));
-        this->ui->tableWidget_2->setItem(x, 2, new SortTableWidgetItem(QString::number(info.VmSize / 1024)));
-        this->ui->tableWidget_2->setItem(x, 3, new SortTableWidgetItem(QString::number(info.VmRss / 1024)));
+        this->ui->tableWidget_2->setItem(x, 2, new SortTableWidgetItem(this->RetrieveUnit(info.VmSize)));
+        this->ui->tableWidget_2->setItem(x, 3, new SortTableWidgetItem(this->RetrieveUnit(info.VmRss)));
         int id = 4;
         if (this->ui->actionOOM_Score->isChecked())
         {
@@ -179,6 +180,39 @@ void MainWindow::RefreshStatic()
     }
     this->ui->tableWidget->horizontalHeader()->resizeSection(0, 200);
     this->ui->tableWidget->horizontalHeader()->resizeSection(1, 200);
+}
+
+QString MainWindow::RetrieveUnit(long n)
+{
+    QString suffix = "kb";
+    n = n / 1024;
+    switch (this->Units)
+    {
+        case UnitType_Gb:
+            n = (n / 1024) / 1024;
+            suffix = "gb";
+            break;
+        case UnitType_Mb:
+            n = n / 1024;
+            suffix = "mb";
+            break;
+        case UnitType_Dynamic:
+            if (n > 10000)
+            {
+                n = n / 1024;
+                suffix = "mb";
+            }
+            if (n > 10000)
+            {
+                n = n / 1024;
+                suffix = "gb";
+            }
+            break;
+        case UnitType_Kb:
+            break;
+    }
+
+    return QString::number(n) + suffix;
 }
 
 void MainWindow::on_actionDisabled_triggered()

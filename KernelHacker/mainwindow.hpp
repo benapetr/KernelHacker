@@ -37,6 +37,14 @@ class SortTableWidgetItem : public QTableWidgetItem
         }
 };
 
+enum UnitType
+{
+    UnitType_Dynamic,
+    UnitType_Kb,
+    UnitType_Mb,
+    UnitType_Gb
+};
+
 class MainWindow : public QMainWindow
 {
         Q_OBJECT
@@ -64,6 +72,8 @@ class MainWindow : public QMainWindow
 
     private:
         void RefreshStatic();
+        QString RetrieveUnit(long n);
+        UnitType Units;
         QLabel *stat;
         QTimer *proc;
         Ui::MainWindow *ui;
