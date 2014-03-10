@@ -95,3 +95,8 @@ void MainWindow::RefreshStatic()
         id++;
     }
 }
+
+void MainWindow::on_actionInfo_about_the_tool_triggered()
+{
+
+}

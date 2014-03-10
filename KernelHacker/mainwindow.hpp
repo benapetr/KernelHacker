@@ -36,7 +36,12 @@ class MainWindow : public QMainWindow
         void on_actionExit_triggered();
         void Resize();
 
+        void on_actionInfo_about_the_tool_triggered();
+
     private:
+        //! This function will reload all static properties of kernel
+        //! that are these which aren't changed frequently and we
+        //! don't need to read them too often
         void RefreshStatic();
         Ui::MainWindow *ui;
 };

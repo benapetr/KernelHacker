@@ -14,6 +14,13 @@ QList<KernelParameter*> KernelParameter::Parameters;
 
 void KernelParameter::Init()
 {
+    int x = 0;
+    while (x < KernelParameter::Parameters.count())
+    {
+        delete KernelParameter::Parameters.at(x);
+        x++;
+    }
+    KernelParameter::Parameters.clear();
     RecursivelyFetch("/proc/sys");
 }
 
