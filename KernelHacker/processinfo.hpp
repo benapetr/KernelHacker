@@ -8,30 +8,32 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#ifndef KERNELPARAMETER_HPP
-#define KERNELPARAMETER_HPP
+#ifndef PROCESSINFO_HPP
+#define PROCESSINFO_HPP
 
-#include <QFile>
 #include <QList>
 #include <QDir>
+#include <QFile>
 #include <QString>
-#include "terminal.hpp"
+#include "systeminfo.hpp"
 
-class KernelParameter
+class ProcessInfo
 {
     public:
-        static void Init();
-        static void RecursivelyFetch(QString path);
-        static unsigned int Items;
-        static unsigned int ItemsC;
-        static QList<KernelParameter*> Parameters;
-        KernelParameter(QString name, QString path);
-        void Retrieve();
+        static void Reload();
+        static QString ReadAttr(QString pid, QString what);
+        static QList<ProcessInfo> ProcessList;
+        static bool IsPID(QString name);
+        ProcessInfo();
+        int PID;
         QString Name;
-        QString Value;
-        QString Path;
-        bool IsModifiable_Online;
-        bool IsModifiable_Offline;
+        unsigned long VmSize;
+        unsigned long VmRss;
+        int nice;
+        int Oom;
+        int Swappiness;
+        long StartTime;
+
 };
 
-#endif // KERNELPARAMETER_HPP
+#endif // PROCESSINFO_HPP

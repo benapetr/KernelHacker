@@ -8,16 +8,12 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
 #include "systeminfo.hpp"
-#include "mainwindow.hpp"
 
-int main(int argc, char *argv[])
+int SystemInfo::Pagesize = 4096;
+
+void SystemInfo::Init()
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
+    Pagesize = LinuxTools::exec("getconf PAGESIZE").toInt();
 }
+

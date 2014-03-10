@@ -8,16 +8,20 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
-#include "systeminfo.hpp"
-#include "mainwindow.hpp"
+#include "linuxtools.hpp"
 
-int main(int argc, char *argv[])
+QString LinuxTools::exec(const char *cmd)
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
+    FILE* pipe = popen(cmd, "r");
+    if (!pipe) return "ERROR";
+    char buffer[128];
+    QString result = "";
+    while(!feof(pipe))
+    {
+        if(fgets(buffer, 128, pipe) != NULL)
+            result += QString(buffer);
+    }
+    pclose(pipe);
+    return result;
 }
+

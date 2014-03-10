@@ -8,16 +8,17 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
-#include "systeminfo.hpp"
-#include "mainwindow.hpp"
+#ifndef TERMINAL_HPP
+#define TERMINAL_HPP
 
-int main(int argc, char *argv[])
+#include <iostream>
+#include <QString>
+
+class Terminal
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
-}
+    public:
+        static void Write(QString message);
+        Terminal();
+};
+
+#endif // TERMINAL_HPP

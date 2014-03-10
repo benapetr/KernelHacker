@@ -11,16 +11,13 @@
 #include "kernelparameter.hpp"
 
 QList<KernelParameter*> KernelParameter::Parameters;
+unsigned int KernelParameter::Items = 0;
+unsigned int KernelParameter::ItemsC = 0;
 
 void KernelParameter::Init()
 {
-    int x = 0;
-    while (x < KernelParameter::Parameters.count())
-    {
-        delete KernelParameter::Parameters.at(x);
-        x++;
-    }
-    KernelParameter::Parameters.clear();
+    ItemsC = 0;
+    Items = 0;
     RecursivelyFetch("/proc/sys");
 }
 
@@ -53,6 +50,13 @@ void KernelParameter::RecursivelyFetch(QString path)
                 tree = tree.mid(10);
             }
             tree.replace("/", ".");
+            Items++;
+            ItemsC++;
+            if (ItemsC > 100)
+            {
+                Terminal::Write("Retrieved " + QString::number(Items) + " kernel parameters so far");
+                ItemsC = 0;
+            }
             Parameters << new KernelParameter(tree + "." + i.fileName(), i.absoluteFilePath());
         }
         x++;
@@ -87,4 +91,5 @@ void KernelParameter::Retrieve()
     }
     this->IsModifiable_Online = file.isWritable();
     this->IsModifiable_Offline = file.isWritable();
+    file.close();
 }

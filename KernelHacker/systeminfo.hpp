@@ -8,16 +8,16 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
-#include "systeminfo.hpp"
-#include "mainwindow.hpp"
+#ifndef SYSTEMINFO_HPP
+#define SYSTEMINFO_HPP
 
-int main(int argc, char *argv[])
+#include "linuxtools.hpp"
+
+class SystemInfo
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
-}
+    public:
+        static void Init();
+        static int Pagesize;
+};
+
+#endif // SYSTEMINFO_HPP

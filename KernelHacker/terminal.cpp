@@ -8,16 +8,13 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
-#include "systeminfo.hpp"
-#include "mainwindow.hpp"
+#include "terminal.hpp"
 
-int main(int argc, char *argv[])
+void Terminal::Write(QString message)
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
+    std::cout << message.toStdString() << std::endl;
+}
+
+Terminal::Terminal()
+{
 }

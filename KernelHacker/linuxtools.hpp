@@ -8,16 +8,16 @@
 //MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //GNU General Public License for more details.
 
-#include <QApplication>
-#include "systeminfo.hpp"
-#include "mainwindow.hpp"
+#ifndef LINUXTOOLS_HPP
+#define LINUXTOOLS_HPP
 
-int main(int argc, char *argv[])
+#include <QString>
+#include <iostream>
+#include <stdio.h>
+
+namespace LinuxTools
 {
-    SystemInfo::Init();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    
-    return a.exec();
+    QString exec(const char* cmd);
 }
+
+#endif // LINUXTOOLS_HPP
