@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     terminal.cpp \
     processinfo.cpp \
     linuxtools.cpp \
-    systeminfo.cpp
+    systeminfo.cpp \
+    config.cpp
 
 HEADERS  += mainwindow.hpp \
     kernelparameter.hpp \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.hpp \
     terminal.hpp \
     processinfo.hpp \
     linuxtools.hpp \
-    systeminfo.hpp
+    systeminfo.hpp \
+    config.hpp
 
 FORMS    += mainwindow.ui \
     about.ui

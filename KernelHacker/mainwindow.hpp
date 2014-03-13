@@ -69,8 +69,7 @@ class MainWindow : public QMainWindow
         void on_actionDisplay_about_triggered();
         void on_actionProcess_priority_triggered();
         void on_actionOOM_Score_triggered();
-
-        void on_actionInfo_about_the_tool_triggered();
+        void processMenu(const QPoint &point);
 
     private:
         //! This function will reload all static properties of kernel

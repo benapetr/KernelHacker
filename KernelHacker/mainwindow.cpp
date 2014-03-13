@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(this->proc, SIGNAL(timeout()), this, SLOT(ProcessReload()));
     this->ui->tableWidget_2->horizontalHeader()->resizeSection(1, 200);
     this->proc->start(2000);
+    this->ui->tableWidget_2->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this->ui->tableWidget_2, SIGNAL(customContextMenuRequested(const QPoint&)),
+            this, SLOT(processMenu(const QPoint&)));
     this->ProcessReload();
     this->RenderStatus();
 }
@@ -274,7 +277,7 @@ void MainWindow::on_actionOOM_Score_triggered()
     this->RegenerateHeader();
 }
 
-void MainWindow::on_actionInfo_about_the_tool_triggered()
+void MainWindow::processMenu(const QPoint& point)
 {
 
 }

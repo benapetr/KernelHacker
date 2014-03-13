@@ -35,13 +35,13 @@ void KernelParameter::RecursivelyFetch(QString path)
         QFileInfo i = info.at(x);
         if (i.isDir())
         {
-            QString blah = i.absoluteFilePath();
-            if (blah == path || blah.length() < path.length())
+            QString file_abs_path = i.absoluteFilePath();
+            if (file_abs_path == path || file_abs_path.length() < path.length())
             {
                 x++;
                 continue;
             }
-            RecursivelyFetch(blah);
+            RecursivelyFetch(file_abs_path);
         } else if (i.isFile())
         {
             QString tree = path;
