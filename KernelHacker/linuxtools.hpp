@@ -17,6 +17,7 @@
 
 namespace LinuxTools
 {
+    //! Load a binary and store its output to string
     QString exec(const char* cmd);
 }
 

@@ -14,6 +14,8 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTableWidgetItem>
+#include <QDesktopWidget>
+#include <QApplication>
 #include <QMessageBox>
 #include <errno.h>
 #include <string.h>
@@ -54,8 +56,6 @@ class MainWindow : public QMainWindow
         static QString String2Bool(bool b);
         ~MainWindow();
         void RegenerateHeader();
-        About *fAbout;
-        bool Loaded;
         
     private slots:
         void on_actionExit_triggered();
@@ -81,6 +81,8 @@ class MainWindow : public QMainWindow
         QLabel *stat;
         QTimer *proc;
         Ui::MainWindow *ui;
+        About *fAbout;
+        bool Loaded;
 };
 
 #endif // MAINWINDOW_HPP

@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->ui->setupUi(this);
     this->fAbout = NULL;
     this->Units = UnitType_Dynamic;
+    QRect desktopRect = QApplication::desktop()->availableGeometry(this);
+    QPoint center = desktopRect.center();
+    move(center.x()-width()*0.5, center.y()-height()*0.5);
     this->ui->tableWidget->setColumnCount(3);
     QStringList header;
     header << tr("Parameter") << tr("Value") << tr("Modifiable");
@@ -28,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->stat = new QLabel(this);
     this->ui->tableWidget_2->verticalHeader()->setVisible(false);
     this->ui->tableWidget_2->horizontalHeader()->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->tableWidget_2->setShowGrid(false);
     this->Loaded = false;
     connect(this->ui->tableWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(Resize()));
@@ -101,6 +105,7 @@ void MainWindow::RenderStatus()
 void MainWindow::ProcessReload()
 {
     ProcessInfo::Reload();
+    this->ui->tableWidget_2->setSortingEnabled(false);
     this->ui->tableWidget_2->clearContents();
     int x = 0;
     while (x < ProcessInfo::ProcessList.count())
@@ -122,7 +127,7 @@ void MainWindow::ProcessReload()
         }
         if (this->ui->actionProcess_priority->isChecked())
         {
-            this->ui->tableWidget_2->setItem(x, id, new SortTableWidgetItem(QString::number(info.nice)));
+            this->ui->tableWidget_2->setItem(x, id, new SortTableWidgetItem(QString::number(info.KernelNice)));
             id++;
         }
         this->ui->tableWidget_2->resizeRowToContents(x);
@@ -133,6 +138,7 @@ void MainWindow::ProcessReload()
         this->ui->tableWidget_2->removeRow(x);
     }
     this->RenderStatus();
+    this->ui->tableWidget_2->setSortingEnabled(true);
     //this->ui->tableWidget_2->sortByColumn(0);
 }
 

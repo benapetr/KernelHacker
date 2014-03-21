@@ -17,6 +17,8 @@
 #include <QString>
 #include "systeminfo.hpp"
 
+//! This class itself represent a process in the system
+//! it also contains a static list of all processes
 class ProcessInfo
 {
     public:
@@ -24,12 +26,18 @@ class ProcessInfo
         static QString ReadAttr(QString pid, QString what);
         static QList<ProcessInfo> ProcessList;
         static bool IsPID(QString name);
+
         ProcessInfo();
+        //! Process ID
         int PID;
+        //! Name of process (this is root name, not full path)
         QString Name;
+        //! Virtual memory size
         unsigned long VmSize;
+        //! Resident memory size
         unsigned long VmRss;
-        int nice;
+        int Priority;
+        int KernelNice;
         int Oom;
         int Swappiness;
         long StartTime;

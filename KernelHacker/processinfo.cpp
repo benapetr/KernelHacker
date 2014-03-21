@@ -39,9 +39,9 @@ void ProcessInfo::Reload()
                 process.VmRss = (unsigned long)SystemInfo::Pagesize * (unsigned long)m.at(1).toLong();
             } else
             {
-                process.nice = 0;
+                process.KernelNice = 0;
             }
-            process.nice = prop.at(18).toInt();
+            process.KernelNice = prop.at(18).toInt();
             process.StartTime = prop.at(21).toLong();
             process.Oom = ReadAttr(i.fileName(), "oom_score").toInt();
             ProcessList.append(process);
@@ -79,7 +79,7 @@ ProcessInfo::ProcessInfo()
     this->PID = 0;
     this->Name = "";
     this->VmRss = 0;
-    this->nice = 0;
+    this->KernelNice = 0;
     this->Swappiness = 0;
     this->Oom = 0;
     this->VmSize = 0;

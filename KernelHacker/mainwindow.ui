@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>hacker</string>
+   <string>Kernel hacker</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -159,6 +159,9 @@
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -182,6 +185,9 @@
            </font>
           </property>
           <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
            <bool>true</bool>
           </property>
          </widget>
@@ -240,7 +246,7 @@
      <x>0</x>
      <y>0</y>
      <width>695</width>
-     <height>29</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
