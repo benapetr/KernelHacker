@@ -44,7 +44,8 @@ enum UnitType
     UnitType_Dynamic,
     UnitType_Kb,
     UnitType_Mb,
-    UnitType_Gb
+    UnitType_Gb,
+    UnitType_Bt
 };
 
 class MainWindow : public QMainWindow
@@ -70,6 +71,11 @@ class MainWindow : public QMainWindow
         void on_actionProcess_priority_triggered();
         void on_actionOOM_Score_triggered();
         void processMenu(const QPoint &point);
+        void on_actionGB_triggered();
+        void on_actionKB_triggered();
+        void on_actionDynamic_triggered();
+        void on_actionMB_triggered();
+        void on_actionBytes_triggered();
 
     private:
         //! This function will reload all static properties of kernel
@@ -77,6 +83,7 @@ class MainWindow : public QMainWindow
         //! don't need to read them too often
         void RefreshStatic();
         QString RetrieveUnit(long n);
+        void SetUnit(UnitType tp);
         UnitType Units;
         QLabel *stat;
         QTimer *proc;

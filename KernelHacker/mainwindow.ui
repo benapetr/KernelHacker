@@ -292,6 +292,7 @@
     <addaction name="actionGB"/>
     <addaction name="actionMB"/>
     <addaction name="actionKB"/>
+    <addaction name="actionBytes"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDisplay_columns"/>
@@ -411,6 +412,14 @@
    </property>
    <property name="text">
     <string>KB</string>
+   </property>
+  </action>
+  <action name="actionBytes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bytes</string>
    </property>
   </action>
  </widget>

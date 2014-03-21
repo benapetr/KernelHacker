@@ -194,6 +194,7 @@ void MainWindow::RefreshStatic()
 QString MainWindow::RetrieveUnit(long n)
 {
     QString suffix = "kb";
+    long x = n;
     n = n / 1024;
     switch (this->Units)
     {
@@ -205,6 +206,9 @@ QString MainWindow::RetrieveUnit(long n)
             n = n / 1024;
             suffix = "mb";
             break;
+        case UnitType_Bt:
+            suffix = "bytes";
+            n = x;
         case UnitType_Dynamic:
             if (n > 10000)
             {
@@ -221,7 +225,43 @@ QString MainWindow::RetrieveUnit(long n)
             break;
     }
 
+    if (x == 0)
+    {
+        return "unknown";
+    }
+    if (n == 0)
+    {
+        return "<  1" + suffix;
+    }
     return QString::number(n) + suffix;
+}
+
+void MainWindow::SetUnit(UnitType tp)
+{
+    this->ui->actionDynamic->setChecked(false);
+    this->ui->actionGB->setChecked(false);
+    this->ui->actionKB->setChecked(false);
+    this->ui->actionBytes->setChecked(false);
+    this->ui->actionMB->setChecked(false);
+    switch (tp)
+    {
+        case UnitType_Dynamic:
+            this->ui->actionDynamic->setChecked(true);
+            break;
+        case UnitType_Gb:
+            this->ui->actionGB->setChecked(true);
+            break;
+        case UnitType_Kb:
+            this->ui->actionKB->setChecked(true);
+            break;
+        case UnitType_Mb:
+            this->ui->actionMB->setChecked(true);
+            break;
+        case UnitType_Bt:
+            this->ui->actionBytes->setChecked(true);
+            break;
+    }
+    this->Units = tp;
 }
 
 void MainWindow::on_actionDisabled_triggered()
@@ -286,4 +326,29 @@ void MainWindow::on_actionOOM_Score_triggered()
 void MainWindow::processMenu(const QPoint& point)
 {
 
+}
+
+void MainWindow::on_actionGB_triggered()
+{
+    this->SetUnit(UnitType_Gb);
+}
+
+void MainWindow::on_actionKB_triggered()
+{
+    this->SetUnit(UnitType_Kb);
+}
+
+void MainWindow::on_actionDynamic_triggered()
+{
+    this->SetUnit(UnitType_Dynamic);
+}
+
+void MainWindow::on_actionMB_triggered()
+{
+    this->SetUnit(UnitType_Mb);
+}
+
+void MainWindow::on_actionBytes_triggered()
+{
+    this->SetUnit(UnitType_Bt);
 }
